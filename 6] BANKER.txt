@@ -1,0 +1,100 @@
+#include"stdio.h"
+void main()
+{
+int n1,n2,i,j,sum,flag,count;
+int allca[10][10],max[10][10],av[10],need[10][10],tavl[10],work[10],temp[10],safe_seq[10];
+printf("\nEnter No. Of Proceses & No. Of Resources : ");
+scanf("%d%d",&n1,&n2);
+printf("Enter The Allocation Matrix \n");
+for(i=0;i<n1;i++)
+ for(j=0;j<n2;j++)
+ {
+ scanf("%d",&allca[i][j]);
+ }
+
+printf("Enter The Maximum Matrix \n");
+for(i=0;i<n1;i++)
+ for(j=0;j<n2;j++)
+ {
+ scanf("%d",&max[i][j]);
+ }
+
+printf("Enter Available Matrix \n");
+for(j=0;j<n2;j++)
+ {
+   scanf("%d",&av[j]);
+ }
+
+
+for(i=0;i<n1;i++)
+ for(j=0;j<n2;j++)
+  {
+   need[i][j]=max[i][j]-allca[i][j];
+  }
+
+printf("The Need Matrix \n");
+for(i=0;i<n1;i++)
+{
+ for(j=0;j<n2;j++)
+  {
+  printf("\t%d",need[i][j]);
+  }
+printf("\n");
+}
+
+printf("\n Total Available");
+ for(j=0;j<n2;j++)
+ {
+   sum=0;
+  for(i=0;i<n1;i++)
+  {
+   sum=sum+allca[i][j];
+  }
+  tavl[j]=sum+av[j];
+  printf("%d",tavl[j]);
+  printf("  ");
+  work[j]=av[j];
+ }
+loop:for(i=0;i<n1;i++)
+{
+if(temp[i]!=1)
+{
+for(j=0;j<n2;j++)
+{
+if(work[j]<need[i][j])
+{
+flag=1;
+}
+}
+if(flag==0)
+{
+printf("\n Process %d Executed",i);
+printf("\n Available=\t");
+for(j=0;j<n2;j++)
+{
+work[j]=work[j]+allca[i][j];
+printf("%d\t ",work[j]);
+}
+count++;
+temp[i]=1;
+safe_seq[count-1]=i;
+}
+else
+flag=0;
+}
+}
+if(count!=n1)
+goto loop;
+for(i=0;i<n2;i++)
+if(work[i]==tavl[i])
+{
+printf("\n safe seq \t");
+for(i=0;i<n1;i++)
+printf("p %d \t",safe_seq[i]);
+}
+}
+
+
+
+
+ 
